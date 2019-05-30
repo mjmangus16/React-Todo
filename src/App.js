@@ -3,6 +3,8 @@ import React from "react";
 import ToDoForm from "./components/TodoComponents/TodoForm";
 import ToDoList from "./components/TodoComponents/TodoList";
 
+import "./App.css";
+
 class App extends React.Component {
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
@@ -14,7 +16,9 @@ class App extends React.Component {
   };
 
   inputDataHandler = val => {
-    this.setState({ inputData: { task: val, completed: false } });
+    this.setState({
+      inputData: { task: val, id: new Date().getTime(), completed: false }
+    });
   };
 
   pushDataHandler = () => {
@@ -24,19 +28,34 @@ class App extends React.Component {
   };
 
   completeToDoHandler = item => {
-    item.completed = true;
+    this.setState(prevState => {
+      return {
+        toDoArray: prevState.toDoArray.map(toDo => {
+          if (toDo.id === item.id) {
+            return { ...toDo, completed: !toDo.completed };
+          } else {
+            return toDo;
+          }
+        })
+      };
+    });
+    console.log(this.state.toDoArray);
   };
 
   clearDataHandler = () => {
-    this.setState({ toDoArray: [] });
+    this.setState(prevState => {
+      return {
+        toDoArray: prevState.toDoArray.filter(toDo => toDo.completed === false)
+      };
+    });
   };
 
   render() {
     const { toDoArray } = this.state;
     return (
-      <div>
+      <div className="app-container">
         <h2>Welcome to your Todo App!</h2>
-        <ToDoList list={toDoArray} />
+        <ToDoList list={toDoArray} complete={this.completeToDoHandler} />
         <ToDoForm
           inputData={this.inputDataHandler}
           pushData={this.pushDataHandler}

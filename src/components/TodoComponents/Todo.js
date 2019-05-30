@@ -1,7 +1,16 @@
 import React from "react";
 
-const ToDo = ({ item }) => {
-  return <p>{item}</p>;
+import "./Todo.css";
+
+const ToDo = ({ item, completeToDo }) => {
+  return (
+    <p
+      onClick={() => completeToDo(item)}
+      className={item.completed === true ? "toDoComplete" : ""}
+    >
+      {item.task}
+    </p>
+  );
 };
 
 export default ToDo;

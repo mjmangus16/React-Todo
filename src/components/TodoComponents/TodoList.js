@@ -5,11 +5,11 @@ import React from "react";
 
 import ToDo from "./Todo";
 
-const ToDoList = ({ list }) => {
+const ToDoList = ({ list, complete }) => {
   return (
     <div>
       {list.map((item, i) => (
-        <ToDo item={item.task} key={i} />
+        <ToDo item={item} completeToDo={complete} key={i} />
       ))}
     </div>
   );
