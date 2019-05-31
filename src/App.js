@@ -11,19 +11,26 @@ class App extends React.Component {
   // this component is going to take care of state, and any change handlers you need to work with your state
 
   state = {
-    inputData: {},
+    inputData: "",
     toDoArray: []
   };
 
   inputDataHandler = val => {
     this.setState({
-      inputData: { task: val, id: new Date().getTime(), completed: false }
+      inputData: val
     });
   };
 
   pushDataHandler = () => {
     this.setState({
-      toDoArray: [...this.state.toDoArray, this.state.inputData]
+      toDoArray: [
+        ...this.state.toDoArray,
+        {
+          task: this.state.inputData,
+          id: new Date().getTime(),
+          completed: false
+        }
+      ]
     });
   };
 
